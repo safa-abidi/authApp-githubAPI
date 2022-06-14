@@ -1,50 +1,32 @@
 import * as React from 'react';
-import {View, Text, Button} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import LoginScreen from './Screens/login';
+import RegisterScreen from './Screens/register';
+const Tab = createBottomTabNavigator();
 
-function HomeScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Profile"
-        onPress={() =>
-          navigation.navigate('Profile', {name: 'Custom profile header'})
-        }
-      />
-    </View>
-  );
-}
-
-function ProfileScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Profile screen</Text>
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-    </View>
-  );
-}
-
-const Stack = createNativeStackNavigator();
-
-function App() {
+export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{title: 'My home'}}
-        />
-        <Stack.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={({route}) => ({title: route.params.name})}
-        />
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({color, size}) => {
+            let iconName;
+
+            if (route.name === 'Register') {
+              iconName = 'add';
+            } else if (route.name === 'Login') {
+              iconName = 'login';
+            }
+            return <MaterialIcons name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: 'tomato',
+          tabBarInactiveTintColor: 'gray',
+        })}>
+        <Tab.Screen name="Register" component={RegisterScreen} />
+        <Tab.Screen name="Login" component={LoginScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
-
-export default App;
