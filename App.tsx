@@ -21,7 +21,7 @@ export default function App() {
             }
             return <MaterialIcons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'tomato',
+          tabBarActiveTintColor: 'teal',
           tabBarInactiveTintColor: 'gray',
         })}>
         <Tab.Screen name="Register" component={RegisterScreen} />
