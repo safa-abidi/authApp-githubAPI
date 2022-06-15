@@ -1,11 +1,11 @@
 import React, {useRef} from 'react';
-import {Text, ScrollView, StyleSheet} from 'react-native';
+import {Text, ScrollView} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
+import {styles} from '../commonStyles';
 
 function RegisterScreen() {
   const {
-    register,
     watch,
     control,
     handleSubmit,
@@ -86,6 +86,7 @@ function RegisterScreen() {
         control={control}
         rules={{
           required: true,
+          minLength: 6,
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
@@ -102,8 +103,11 @@ function RegisterScreen() {
         )}
         name="password"
       />
-      {errors.password && (
+      {errors.password && errors.password.type === 'required' && (
         <Text style={styles.erreur}>Password is required</Text>
+      )}
+      {errors.password && errors.password.type === 'minLength' && (
+        <Text style={styles.erreur}>Password is at least 6 chars long</Text>
       )}
       <Controller
         control={control}
@@ -134,26 +138,10 @@ function RegisterScreen() {
         mode="contained"
         color="#008080"
         onPress={handleSubmit(onSubmit)}>
-        Submit
+        Create account
       </Button>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  erreur: {
-    color: 'red',
-  },
-  container: {
-    flex: 1,
-    margin: 20,
-  },
-  input: {
-    marginBottom: 10,
-  },
-  button: {
-    marginTop: 20,
-  },
-});
 
 export default RegisterScreen;

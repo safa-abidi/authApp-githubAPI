@@ -1,32 +1,38 @@
 import * as React from 'react';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import LoginScreen from './Screens/login';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RegisterScreen from './Screens/register';
-const Tab = createBottomTabNavigator();
 
 export default function App() {
+  const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarIcon: ({color, size}) => {
-            let iconName;
-
-            if (route.name === 'Register') {
-              iconName = 'add';
-            } else if (route.name === 'Login') {
-              iconName = 'login';
-            }
-            return <MaterialIcons name={iconName} size={size} color={color} />;
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: 'teal',
           },
-          tabBarActiveTintColor: 'teal',
-          tabBarInactiveTintColor: 'gray',
-        })}>
-        <Tab.Screen name="Register" component={RegisterScreen} />
-        <Tab.Screen name="Login" component={LoginScreen} />
-      </Tab.Navigator>
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}>
+        <Stack.Screen
+          name="login"
+          component={LoginScreen}
+          options={{
+            title: 'Log In',
+          }}
+        />
+        <Stack.Screen
+          name="register"
+          component={RegisterScreen}
+          options={{
+            title: 'Create account',
+          }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
