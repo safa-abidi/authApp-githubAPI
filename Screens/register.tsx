@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import * as React from 'react';
 import {Text, ScrollView} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
@@ -18,8 +18,7 @@ function RegisterScreen() {
       confirmPassword: '',
     },
   });
-  const password = useRef({});
-  password.current = watch('password', '');
+  const password = watch('password', '');
 
   const onSubmit = data => console.log(data);
   return (
@@ -113,8 +112,7 @@ function RegisterScreen() {
         control={control}
         rules={{
           required: true,
-          validate: value =>
-            value === password.current || 'The passwords do not match',
+          validate: value => value === password,
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
@@ -131,8 +129,12 @@ function RegisterScreen() {
         )}
         name="confirmPassword"
       />
-      {errors.confirmPassword && errors.confirmPassword.type === 'required' && (<Text style={styles.erreur}>Confirm password is required</Text>)}
-      {errors.confirmPassword && errors.confirmPassword.type === 'validate' && (<Text style={styles.erreur}>Passwords do not match</Text>)}
+      {errors.confirmPassword && errors.confirmPassword.type === 'required' && (
+        <Text style={styles.erreur}>Confirm password is required</Text>
+      )}
+      {errors.confirmPassword && errors.confirmPassword.type === 'validate' && (
+        <Text style={styles.erreur}>Passwords do not match</Text>
+      )}
       <Button
         style={styles.button}
         mode="contained"

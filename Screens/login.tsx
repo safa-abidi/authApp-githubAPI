@@ -23,7 +23,6 @@ function LoginScreen({navigation}) {
         control={control}
         rules={{
           required: true,
-          pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
@@ -39,17 +38,11 @@ function LoginScreen({navigation}) {
         )}
         name="email"
       />
-      {errors.email && errors.email.type === 'required' && (
-        <Text style={styles.erreur}>Email is required</Text>
-      )}
-      {errors.email && errors.email.type === 'pattern' && (
-        <Text style={styles.erreur}>Email is not valid</Text>
-      )}
+      {errors.email && <Text style={styles.erreur}>Email is required</Text>}
       <Controller
         control={control}
         rules={{
           required: true,
-          minLength: 6,
         }}
         render={({field: {onChange, onBlur, value}}) => (
           <TextInput
@@ -66,11 +59,8 @@ function LoginScreen({navigation}) {
         )}
         name="password"
       />
-      {errors.password && errors.password.type === 'required' && (
+      {errors.password && (
         <Text style={styles.erreur}>Password is required</Text>
-      )}
-      {errors.password && errors.password.type === 'minLength' && (
-        <Text style={styles.erreur}>Password is at least 6 chars long</Text>
       )}
       <Button
         style={styles.button}
