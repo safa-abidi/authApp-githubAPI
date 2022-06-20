@@ -1,8 +1,10 @@
-import * as React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Text, ScrollView} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import {styles} from '../commonStyles';
+import {AuthContext} from '../context/AuthContext';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 function LoginScreen({navigation}) {
   const {
@@ -16,9 +18,13 @@ function LoginScreen({navigation}) {
     },
   });
 
-  const onSubmit = data => console.log(data);
+  const {isLoading, login, authError} = useContext(AuthContext);
+  const onSubmit = data => {
+    login(data.email, data.password);
+  };
   return (
     <ScrollView style={styles.container}>
+      <Spinner visible={isLoading} />
       <Controller
         control={control}
         rules={{
@@ -76,6 +82,8 @@ function LoginScreen({navigation}) {
         onPress={() => navigation.navigate('register')}>
         Don't have an account?
       </Button>
+
+      {authError ? <Text style={styles.authErreur}>{authError}</Text> : null}
     </ScrollView>
   );
 }

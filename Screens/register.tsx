@@ -1,8 +1,10 @@
-import * as React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Text, ScrollView} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import {styles} from '../commonStyles';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {AuthContext} from '../context/AuthContext';
 
 function RegisterScreen() {
   const {
@@ -18,11 +20,16 @@ function RegisterScreen() {
       confirmPassword: '',
     },
   });
+  const {isLoading, register, registerError} = useContext(AuthContext);
   const password = watch('password', '');
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    register(data.fullName, data.email, data.password);
+    console.log(data.fullName);
+  };
   return (
     <ScrollView style={styles.container}>
+      <Spinner visible={isLoading} />
       <Controller
         control={control}
         rules={{
@@ -142,6 +149,10 @@ function RegisterScreen() {
         onPress={handleSubmit(onSubmit)}>
         Create account
       </Button>
+
+      {registerError ? (
+        <Text style={styles.authErreur}>{registerError}</Text>
+      ) : null}
     </ScrollView>
   );
 }

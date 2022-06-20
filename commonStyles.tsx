@@ -3,6 +3,12 @@ const styles = StyleSheet.create({
   erreur: {
     color: 'red',
   },
+  authErreur: {
+    marginTop: 30,
+    color: 'red',
+    fontSize: 20,
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
     margin: 20,
