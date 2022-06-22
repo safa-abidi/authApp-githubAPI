@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {Text, ScrollView} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
@@ -25,7 +25,6 @@ function RegisterScreen() {
 
   const onSubmit = data => {
     register(data.fullName, data.email, data.password);
-    console.log(data.fullName);
   };
   return (
     <ScrollView style={styles.container}>
